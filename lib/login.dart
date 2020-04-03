@@ -2,29 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'colors.dart';
 import 'top_bar.dart';
-
 // void main() {
 //   runApp(MaterialApp(
+    
 //     title: 'REGISTRATION SCREEN',
 //     home: FavoriteCity(),
 //     theme: ThemeData(accentColor: Colors.deepPurpleAccent),
 //   ));
 // }
 
-class Signup extends StatefulWidget {
-  
-  static String id ="signup";
+class Login extends StatefulWidget {
+   static String id ="login";
+
+
   @override
   State<StatefulWidget> createState() {
-    return _Signup();
+    return _Login();
   }
 }
 
-class _Signup extends State<Signup> {
-  String fullname= "";
-  String email = "";
-  String username="";
-  String password="";
+class _Login extends State<Login> {
+  String username = "";
+  String password = "";
   var _formKey = GlobalKey<FormState>();
 
   @override
@@ -41,17 +40,17 @@ class _Signup extends State<Signup> {
                 TopBar(),
                 Padding(
                   padding: EdgeInsets.only(
-                      right: 50.0, left: 50.0, bottom: 10.0, top: 50.0),
+                      right: 50.0, left: 50.0, bottom: 50.0, top: 10.0),
                   child: TextFormField(
                     style: textStyle,
                     validator: (String input) {
                       if (input.isEmpty) {
-                        return 'Enter Fullname';
+                        return 'Enter Username';
                       }
                     },
                     decoration: InputDecoration(
-                      labelText: 'Fullname',
-                      hintText: 'Enter Fullname',
+                      labelText: 'Username',
+                      hintText: 'Enter Username',
                       labelStyle: textStyle,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -59,62 +58,14 @@ class _Signup extends State<Signup> {
                     ),
                     onChanged: (String input) {
                       setState(() {
-                        fullname = input;
+                        username = input;
                       });
                     },
                   ),
                 ),
                 Padding(
                     padding: EdgeInsets.only(
-                        right: 50.0, left: 50.0, bottom: 10.0, top: 1.0),
-                    child: TextFormField(
-                      style: textStyle,
-                      validator: (String input) {
-                        if (input.isEmpty) {
-                          return 'Enter Email';
-                        }
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        hintText: 'Email',
-                        labelStyle: textStyle,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                      onChanged: (String input) {
-                        setState(() {
-                          email = input;
-                        });
-                      },
-                    )),
-                    Padding(
-                    padding: EdgeInsets.only(
-                        right: 50.0, left: 50.0, bottom: 10.0, top: 1.0),
-                    child: TextFormField(
-                      style: textStyle,
-                      validator: (String input) {
-                        if (input.isEmpty) {
-                          return 'Enter username';
-                        }
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'username',
-                        hintText: 'username',
-                        labelStyle: textStyle,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                      onChanged: (String input) {
-                        setState(() {
-                          username = input;
-                        });
-                      },
-                    )),
-                    Padding(
-                    padding: EdgeInsets.only(
-                        right: 50.0, left: 50.0, bottom: 10.0, top: 1.0),
+                        right: 50.0, left: 50.0, bottom: 50.0, top: 5.0),
                     child: TextFormField(
                       style: textStyle,
                       validator: (String input) {
@@ -142,15 +93,13 @@ class _Signup extends State<Signup> {
                     child: RaisedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.deepPurple)),
+                            side: BorderSide(color: Colors.deepPurple[200])),
                         color: Theme.of(context).accentColor,
-                        child: Text('Signup', textScaleFactor: 1.5),
+                        child: Text('Login', textScaleFactor: 1.5),
                         onPressed: () {
                           setState(() {
                             if (_formKey.currentState.validate()) {
-                              debugPrint(fullname);
                               debugPrint(username);
-                              debugPrint(email);
                               debugPrint(password);
                             }
                           });

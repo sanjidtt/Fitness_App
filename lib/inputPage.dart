@@ -8,7 +8,8 @@ enum Gender{
 }
 
 Gender gender;
-int height=180;
+int heightFeet=5;
+int heightInch=3;
 int weight=70;
 int age=21;
 double bmi;
@@ -30,16 +31,17 @@ class _InputPageState extends State<InputPage> {
       appBar: AppBar(
         title: Text('BMI CALCULATOR'),
       ),
-      body: IntrinsicHeight(
-        child: Column(
+      body:
+        Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
+              flex: 1,
               child: Row(
                 children: <Widget>[
                   Expanded(
                     child: BoxBmi(
-                      boxColor: gender==Gender.Male?Color(0xFF1d1e33):Color(0xFF111328),
+                      boxColor: gender==Gender.Male?Colors.blueGrey:Color(0xFF111328),
                       boxChild: BoxDetails(label: 'MALE', iconName: FontAwesomeIcons.mars),
                       onPressed: () {
                         setState(() {
@@ -50,7 +52,7 @@ class _InputPageState extends State<InputPage> {
                   ),
                   Expanded(
                     child: BoxBmi(
-                      boxColor: gender==Gender.Female?Color(0xFF1d1e33):Color(0xFF111328),
+                      boxColor: gender==Gender.Female?Colors.blueGrey:Color(0xFF111328),
                       boxChild: BoxDetails(iconName: FontAwesomeIcons.venus, label: 'FEMALE'),
                       onPressed: () {
                         setState(() {
@@ -64,53 +66,76 @@ class _InputPageState extends State<InputPage> {
               ),
             ),
             Expanded(
+              flex: 1,
               child: BoxBmi(
                 boxColor: Color(0xFF1d1e33),
                 boxChild: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  //crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text('HEIGHT', style:TextStyle(color: Color(0xFF8D8E98),fontSize: 18.0),),
+                    Text('HEIGHT', style:TextStyle(color: Color(0xFF8D8E98),fontSize: 20.0),),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       textBaseline: TextBaseline.alphabetic,
                       children: <Widget>[
-                        Text(height.toString(), style: TextStyle(fontSize: 50, fontWeight: FontWeight.w900)),
-                        //Text('180', style: TextStyle(fontSize: 50, fontWeight: FontWeight.w900),),
-                        Text('cm', style: TextStyle(color: Color(0xFF8D8E98),fontSize: 18.0)),
+                        Text(heightFeet.toString(), style: TextStyle(fontSize: 45, fontWeight: FontWeight.w900)),
+                        Text('FEET', style: TextStyle(color: Color(0xFF8D8E98),fontSize: 18.0)),
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            thumbColor: Color(0xFFEB1555),
+                            overlayColor: Color(0x29EB1555),
+                            activeTrackColor: Colors.white,
+                            inactiveTrackColor: Color(0xFF8D8E98),
+                            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                            overlayShape: RoundSliderOverlayShape(overlayRadius: 25.0),
+                          ),
+                          child: Slider(
+                            min: 3,
+                            max: 9,
+                            value: heightFeet.toDouble(),
+                            onChanged: (double value){
+                              setState(() {
+                                heightFeet=value.round();
+                              });
+                            },
+                          ),
+                        ),
                       ],
                     ),
-                    SliderTheme(
-                      data: SliderTheme.of(context).copyWith(
-                        thumbColor: Color(0xFFEB1555),
-                        overlayColor: Color(0x29EB1555),
-                        activeTrackColor: Colors.white,
-                        inactiveTrackColor: Color(0xFF8D8E98),
-                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
-                        overlayShape: RoundSliderOverlayShape(overlayRadius: 30.0),
-                      ),
-                      child: Slider(
-                        min: 100,
-                        max: 250,
-                        value: height.toDouble(),
-                        onChanged: (double value){
-                          setState(() {
-                            height=value.round();
-                          });
-                        },
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: <Widget>[
+                        Text(heightInch.toString(), style: TextStyle(fontSize: 45, fontWeight: FontWeight.w900)),
+                        Text('INCH', style: TextStyle(color: Color(0xFF8D8E98),fontSize: 18.0)),
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            thumbColor: Color(0xFFEB1555),
+                            overlayColor: Color(0x29EB1555),
+                            activeTrackColor: Colors.white,
+                            inactiveTrackColor: Color(0xFF8D8E98),
+                            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                            overlayShape: RoundSliderOverlayShape(overlayRadius: 25.0),
+                          ),
+                          child: Slider(
+                            min: 0,
+                            max: 12,
+                            value: heightInch.toDouble(),
+                            onChanged: (double value){
+                              setState(() {
+                                heightInch=value.round();
+                              });
+                            },
+                          ),
+                        ),
+                      ],
                     ),
 
-
                   ],
-
-
-
                 ),
               ),
             ),
             Expanded(
+              flex: 1,
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -118,7 +143,7 @@ class _InputPageState extends State<InputPage> {
                       boxColor: Color(0xFF1d1e33),
                       boxChild: Column(
                         children: <Widget>[
-                          Text('WEIGHT', style:TextStyle(color: Color(0xFF8D8E98),fontSize: 18.0)),
+                          Text('WEIGHT(KG)', style:TextStyle(color: Color(0xFF8D8E98),fontSize: 18.0)),
                           Text(weight.toString(), style: TextStyle(fontSize: 50.0, fontWeight: FontWeight.w900)),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -206,39 +231,45 @@ class _InputPageState extends State<InputPage> {
               ),
 
             ),
-            GestureDetector(
-              onTap: () {
-                bmi=weight/((height/100.0)*(height/100.0));
-                print(bmi);
+            Expanded(
+              flex: 0,
+              child: GestureDetector(
+                onTap: () {
+                  double height=heightFeet+(heightInch/12.0);
+                  height=height/3.281;
 
-                if(bmi<18.5){
-                  comment="YOUR BMI IS IN UNDERWEIGHT RANGE!";
-                }else if(bmi>=18.5 && bmi<=24.9){
-                  comment="YOUR BMI IS IN HEALTHY RANGE!";
-                }else if(bmi>=25.0 && bmi<=29.9){
-                  comment="YOUR BMI IS IN OVERWEIGHT RANGE!";
-                }else{
-                  comment="YOU ARE DANGEROUSLY OBESE!";
-                }
+                  bmi=weight/(height*height);
+                  print(bmi);
+
+                  if(bmi<18.5){
+                    comment="YOUR BMI IS IN UNDERWEIGHT RANGE!";
+                  }else if(bmi>=18.5 && bmi<=24.9){
+                    comment="YOUR BMI IS IN HEALTHY RANGE!";
+                  }else if(bmi>=25.0 && bmi<=29.9){
+                    comment="YOUR BMI IS IN OVERWEIGHT RANGE!";
+                  }else{
+                    comment="YOU ARE DANGEROUSLY OBESE!";
+                  }
 
 
 
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Result(bmi: bmi, comment: comment)));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Result(bmi: bmi, comment: comment)));
 
-              },
-              child: Container(
-                child: Center(child: Text('CALCULATE', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white))),
-                height: 50,
-                color: Color(0xFFEB1555),
-                margin: EdgeInsets.only(top: 10.0)
+                },
+                child: Container(
+                  child: Center(child: Text('CALCULATE', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white))),
+                  height: 50,
+                  color: Color(0xFFEB1555),
+                  margin: EdgeInsets.only(top: 10.0)
+                ),
               ),
             )
 
 
           ],
         ),
-      ),
+
 
 
     );

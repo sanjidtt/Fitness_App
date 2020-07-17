@@ -1,6 +1,5 @@
-import 'package:fitness_app/screens/dashboard_screen.dart';
-import 'package:fitness_app/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:watertwo/Start.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,13 +8,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      initialRoute: SplashScreen.id,
-      routes: {
-        SplashScreen.id: (context) => SplashScreen(),
-        DashboardScreen.id: (context) => DashboardScreen(),
-      },
+      theme: ThemeData(
+        primaryColor: Color(0xFFbbe7f5),
+        accentColor: Colors.blueAccent,
+        brightness: Brightness.light,
+        textTheme: TextTheme(
+          body1: TextStyle(color: Color(0xFF22277A)),
+        ),
+        appBarTheme: AppBarTheme(
+          textTheme: TextTheme(
+            body1: TextStyle(color: Color(0xFFbbe7f5),),
+            //body2: TextStyle(color: Color(0xFFbbe7f5),),
+          ),
+        ),
+        bottomAppBarColor: Color(0xFFbbe7f5),
+        bottomAppBarTheme: BottomAppBarTheme(
+          elevation: 0.1,
+          color: Color(0xFFbbe7f5),
+        ),
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      home: Start(),
     );
   }
 }
